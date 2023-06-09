@@ -11,15 +11,34 @@ export class FireworkComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.startFireworks();
+  }
+
+  startFireworks = async () => {
+    const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
+
     const fireworksContainer = document.getElementById("fireworks-container");
-    const fireworks = new Fireworks(fireworksContainer!, {
-      trace: 8,
-      acceleration: 1,
+    const fireworksBlue = new Fireworks(fireworksContainer!, {
+      hue: { min: 0, max: 240},
+      trace: 4,
+      acceleration: 1.01,
+      particles: 100,
+      traceSpeed: 8,
+      mouse: {click: true, move: false, max: 3},
+    });
+    const fireworksRed = new Fireworks(fireworksContainer!, {
+      hue: { min: 0, max: 0},
+      trace: 4,
+      acceleration: 1.01,
       particles: 30,
-      traceSpeed: 5,
+      traceSpeed: 8,
     });
 
-    fireworks.start();
+    fireworksBlue.start();
+    fireworksRed.start();
+    await wait(2000);
+  //   fireworksBlue.stop();
+  //   fireworksRed.stop();
   }
 
 }
